@@ -8,8 +8,17 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Props } from "./components/app-button/type";
 export namespace Components {
     interface AppButton {
+        /**
+          * fit button width to its parent width
+         */
         "block": Props['block'];
+        /**
+          * size of button
+         */
         "size": Props['size'];
+        /**
+          * theme of button
+         */
         "theme": Props['theme'];
     }
     interface MyComponent {
@@ -47,8 +56,17 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AppButton {
+        /**
+          * fit button width to its parent width
+         */
         "block"?: Props['block'];
+        /**
+          * size of button
+         */
         "size"?: Props['size'];
+        /**
+          * theme of button
+         */
         "theme"?: Props['theme'];
     }
     interface MyComponent {

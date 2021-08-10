@@ -39,8 +39,19 @@ const widthClassName = (block: Props['block']) => {
   shadow: true,
 })
 export class AppButton {
+  /**
+   * theme of button
+   */
   @Prop() theme: Props['theme']
+
+  /**
+   * size of button
+   */
   @Prop() size: Props['size']
+
+  /**
+   * fit button width to its parent width
+   */
   @Prop() block: Props['block']
 
   render() {
