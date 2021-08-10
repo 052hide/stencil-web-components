@@ -7,11 +7,29 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Props } from "./components/wc-button/type";
 export namespace Components {
+    interface SampleContainer {
+        /**
+          * click event
+         */
+        "handleClicked": () => Promise<void>;
+    }
     interface WcButton {
         /**
           * fit button width to its parent width
          */
         "block": Props['block'];
+        /**
+          * button disabled
+         */
+        "disabled": Props['disabled'];
+        /**
+          * html button type
+         */
+        "htmlType": Props['htmlType'];
+        /**
+          * show loading icon
+         */
+        "loading": Props['loading'];
         /**
           * size of button
          */
@@ -23,6 +41,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLSampleContainerElement extends Components.SampleContainer, HTMLStencilElement {
+    }
+    var HTMLSampleContainerElement: {
+        prototype: HTMLSampleContainerElement;
+        new (): HTMLSampleContainerElement;
+    };
     interface HTMLWcButtonElement extends Components.WcButton, HTMLStencilElement {
     }
     var HTMLWcButtonElement: {
@@ -30,15 +54,34 @@ declare global {
         new (): HTMLWcButtonElement;
     };
     interface HTMLElementTagNameMap {
+        "sample-container": HTMLSampleContainerElement;
         "wc-button": HTMLWcButtonElement;
     }
 }
 declare namespace LocalJSX {
+    interface SampleContainer {
+    }
     interface WcButton {
         /**
           * fit button width to its parent width
          */
         "block"?: Props['block'];
+        /**
+          * button disabled
+         */
+        "disabled"?: Props['disabled'];
+        /**
+          * html button type
+         */
+        "htmlType"?: Props['htmlType'];
+        /**
+          * show loading icon
+         */
+        "loading"?: Props['loading'];
+        /**
+          * click event emit
+         */
+        "onClicked"?: (event: CustomEvent<any>) => void;
         /**
           * size of button
          */
@@ -49,6 +92,7 @@ declare namespace LocalJSX {
         "theme"?: Props['theme'];
     }
     interface IntrinsicElements {
+        "sample-container": SampleContainer;
         "wc-button": WcButton;
     }
 }
@@ -56,6 +100,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "sample-container": LocalJSX.SampleContainer & JSXBase.HTMLAttributes<HTMLSampleContainerElement>;
             "wc-button": LocalJSX.WcButton & JSXBase.HTMLAttributes<HTMLWcButtonElement>;
         }
     }
