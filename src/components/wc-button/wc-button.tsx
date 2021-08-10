@@ -1,13 +1,13 @@
-import { Component, Prop, Host, h } from '@stencil/core'
+import { Component, Prop, State, Event, EventEmitter, Host, h } from '@stencil/core'
 import { Props } from './type'
 
-const baseClassName = () => 'inline-flex items-center border border-transparent shadow-sm transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
+const baseClassName = () => 'relative inline-flex items-center border border-transparent shadow-sm transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
 
-const themeClassName = (theme: Props['theme']) => {
+const themeClassName = (theme: Props['theme'], disabled: Props['disabled']) => {
   if (theme === 'primary') {
-    return 'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500'
+    return `bg-indigo-600 text-white ${disabled ? '' : 'hover:bg-indigo-700 focus:ring-indigo-500'}`
   } else if (theme === 'secondary') {
-    return 'text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:ring-indigo-500'
+    return `text-indigo-700 bg-indigo-100 ${disabled ? '' : 'hover:bg-indigo-200 focus:ring-indigo-500'}`
   } else {
     return ''
   }
@@ -33,12 +33,31 @@ const widthClassName = (block: Props['block']) => {
   return block ? 'flex flex-row justify-center items-center w-full' : ''
 }
 
+const disabledClassName = (disabled: Props['disabled']) => {
+  return disabled ? 'opacity-50 cursor-not-allowed' : ''
+}
+
 @Component({
   tag: 'wc-button',
   styleUrls: ['../../global/app.css'],
   shadow: true,
 })
 export class WcButton {
+  /**
+   * html button type
+   */
+  @Prop() htmlType: Props['htmlType']
+
+  /**
+   * button disabled
+   */
+  @Prop() disabled: Props['disabled']
+
+  /**
+   * show loading icon
+   */
+  @Prop() loading: Props['loading']
+
   /**
    * theme of button
    */
@@ -54,11 +73,43 @@ export class WcButton {
    */
   @Prop() block: Props['block']
 
+  @State() inProgress: boolean
+
+  /**
+   * click event emit
+   */
+  @Event() clicked: EventEmitter
+
+  private handleClickSelf = () => {
+    this.inProgress = true
+    setTimeout(() => {
+      this.inProgress = false
+    }, 500) // 二度押し防止
+    this.clicked.emit()
+  }
+
   render() {
     return (
       <Host>
-        <button class={`${baseClassName()}, ${themeClassName(this.theme)} ${sizeClassName(this.size)} ${widthClassName(this.block)}`}>
+        <button
+          type={this.htmlType}
+          disabled={this.disabled || this.inProgress}
+          class={`${baseClassName()}, ${themeClassName(this.theme, this.disabled)} ${sizeClassName(this.size)} ${widthClassName(this.block)} ${disabledClassName(this.disabled)}`}
+          onClick={this.handleClickSelf}
+        >
           <slot />
+          {this.loading && (
+            <span class="absolute inset-y-0 right-0 flex flex-row justify-center items-center px-4">
+              <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            </span>
+          )}
         </button>
       </Host>
     )
