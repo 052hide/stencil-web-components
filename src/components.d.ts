@@ -5,7 +5,13 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Props } from "./components/app-button/type";
 export namespace Components {
+    interface AppButton {
+        "block": Props['block'];
+        "size": Props['size'];
+        "theme": Props['theme'];
+    }
     interface MyComponent {
         /**
           * The first name
@@ -22,6 +28,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLAppButtonElement extends Components.AppButton, HTMLStencilElement {
+    }
+    var HTMLAppButtonElement: {
+        prototype: HTMLAppButtonElement;
+        new (): HTMLAppButtonElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -29,10 +41,16 @@ declare global {
         new (): HTMLMyComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "app-button": HTMLAppButtonElement;
         "my-component": HTMLMyComponentElement;
     }
 }
 declare namespace LocalJSX {
+    interface AppButton {
+        "block"?: Props['block'];
+        "size"?: Props['size'];
+        "theme"?: Props['theme'];
+    }
     interface MyComponent {
         /**
           * The first name
@@ -48,6 +66,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface IntrinsicElements {
+        "app-button": AppButton;
         "my-component": MyComponent;
     }
 }
@@ -55,6 +74,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "app-button": LocalJSX.AppButton & JSXBase.HTMLAttributes<HTMLAppButtonElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }
     }
