@@ -34,11 +34,11 @@ const widthClassName = (block: Props['block']) => {
 }
 
 @Component({
-  tag: 'app-button',
+  tag: 'wc-button',
   styleUrls: ['../../global/app.css'],
   shadow: true,
 })
-export class AppButton {
+export class WcButton {
   /**
    * theme of button
    */
