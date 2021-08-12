@@ -5,39 +5,66 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Props } from "./components/wc-button/type";
+import { WcButtonProps } from "./components/wc-button/type";
+import { WcInputProps } from "./components/wc-input/type";
 export namespace Components {
     interface SampleContainer {
         /**
           * click event
          */
         "handleClicked": () => Promise<void>;
+        /**
+          * input event
+         */
+        "handleInput": (event: CustomEvent<string>) => Promise<void>;
     }
     interface WcButton {
         /**
           * fit button width to its parent width
          */
-        "block": Props['block'];
+        "block": WcButtonProps['block'];
         /**
           * button disabled
          */
-        "disabled": Props['disabled'];
+        "disabled": WcButtonProps['disabled'];
         /**
           * html button type
          */
-        "htmlType": Props['htmlType'];
+        "htmlType": WcButtonProps['htmlType'];
         /**
           * show loading icon
          */
-        "loading": Props['loading'];
+        "loading": WcButtonProps['loading'];
         /**
           * size of button
          */
-        "size": Props['size'];
+        "size": WcButtonProps['size'];
         /**
           * theme of button
          */
-        "theme": Props['theme'];
+        "theme": WcButtonProps['theme'];
+    }
+    interface WcInput {
+        /**
+          * input disabled
+         */
+        "disabled": WcInputProps['disabled'];
+        /**
+          * label of input
+         */
+        "label": WcInputProps['label'];
+        /**
+          * name of input
+         */
+        "name": WcInputProps['name'];
+        /**
+          * placeholder of input
+         */
+        "placeholder": WcInputProps['placeholder'];
+        /**
+          * value of input
+         */
+        "value": WcInputProps['value'];
     }
 }
 declare global {
@@ -53,9 +80,16 @@ declare global {
         prototype: HTMLWcButtonElement;
         new (): HTMLWcButtonElement;
     };
+    interface HTMLWcInputElement extends Components.WcInput, HTMLStencilElement {
+    }
+    var HTMLWcInputElement: {
+        prototype: HTMLWcInputElement;
+        new (): HTMLWcInputElement;
+    };
     interface HTMLElementTagNameMap {
         "sample-container": HTMLSampleContainerElement;
         "wc-button": HTMLWcButtonElement;
+        "wc-input": HTMLWcInputElement;
     }
 }
 declare namespace LocalJSX {
@@ -65,19 +99,19 @@ declare namespace LocalJSX {
         /**
           * fit button width to its parent width
          */
-        "block"?: Props['block'];
+        "block"?: WcButtonProps['block'];
         /**
           * button disabled
          */
-        "disabled"?: Props['disabled'];
+        "disabled"?: WcButtonProps['disabled'];
         /**
           * html button type
          */
-        "htmlType"?: Props['htmlType'];
+        "htmlType"?: WcButtonProps['htmlType'];
         /**
           * show loading icon
          */
-        "loading"?: Props['loading'];
+        "loading"?: WcButtonProps['loading'];
         /**
           * click event emit
          */
@@ -85,15 +119,42 @@ declare namespace LocalJSX {
         /**
           * size of button
          */
-        "size"?: Props['size'];
+        "size"?: WcButtonProps['size'];
         /**
           * theme of button
          */
-        "theme"?: Props['theme'];
+        "theme"?: WcButtonProps['theme'];
+    }
+    interface WcInput {
+        /**
+          * input disabled
+         */
+        "disabled"?: WcInputProps['disabled'];
+        /**
+          * label of input
+         */
+        "label"?: WcInputProps['label'];
+        /**
+          * name of input
+         */
+        "name"?: WcInputProps['name'];
+        /**
+          * click event emit
+         */
+        "onChangeValue"?: (event: CustomEvent<string>) => void;
+        /**
+          * placeholder of input
+         */
+        "placeholder"?: WcInputProps['placeholder'];
+        /**
+          * value of input
+         */
+        "value"?: WcInputProps['value'];
     }
     interface IntrinsicElements {
         "sample-container": SampleContainer;
         "wc-button": WcButton;
+        "wc-input": WcInput;
     }
 }
 export { LocalJSX as JSX };
@@ -102,6 +163,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "sample-container": LocalJSX.SampleContainer & JSXBase.HTMLAttributes<HTMLSampleContainerElement>;
             "wc-button": LocalJSX.WcButton & JSXBase.HTMLAttributes<HTMLWcButtonElement>;
+            "wc-input": LocalJSX.WcInput & JSXBase.HTMLAttributes<HTMLWcInputElement>;
         }
     }
 }

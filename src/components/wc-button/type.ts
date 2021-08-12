@@ -1,4 +1,4 @@
-export type Props<> = {
+export type WcButtonProps = {
   htmlType: 'button' | 'submit'
   disabled: boolean
   loading: boolean

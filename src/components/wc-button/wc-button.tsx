@@ -1,9 +1,9 @@
 import { Component, Prop, State, Event, EventEmitter, Host, h } from '@stencil/core'
-import { Props } from './type'
+import { WcButtonProps } from './type'
 
 const baseClassName = () => 'relative inline-flex items-center border border-transparent shadow-sm transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
 
-const themeClassName = (theme: Props['theme'], disabled: Props['disabled']) => {
+const themeClassName = (theme: WcButtonProps['theme'], disabled: WcButtonProps['disabled']) => {
   if (theme === 'primary') {
     return `bg-indigo-600 text-white ${disabled ? '' : 'hover:bg-indigo-700 focus:ring-indigo-500'}`
   } else if (theme === 'secondary') {
@@ -13,7 +13,7 @@ const themeClassName = (theme: Props['theme'], disabled: Props['disabled']) => {
   }
 }
 
-const sizeClassName = (size: Props['size']) => {
+const sizeClassName = (size: WcButtonProps['size']) => {
   if (size === 'xs') {
     return 'px-2.5 py-1.5 text-xs rounded'
   } else if (size === 'sm') {
@@ -29,11 +29,11 @@ const sizeClassName = (size: Props['size']) => {
   }
 }
 
-const widthClassName = (block: Props['block']) => {
+const widthClassName = (block: WcButtonProps['block']) => {
   return block ? 'flex flex-row justify-center items-center w-full' : ''
 }
 
-const disabledClassName = (disabled: Props['disabled']) => {
+const disabledClassName = (disabled: WcButtonProps['disabled']) => {
   return disabled ? 'opacity-50 cursor-not-allowed' : ''
 }
 
@@ -46,32 +46,32 @@ export class WcButton {
   /**
    * html button type
    */
-  @Prop() htmlType: Props['htmlType']
+  @Prop() htmlType: WcButtonProps['htmlType']
 
   /**
    * button disabled
    */
-  @Prop() disabled: Props['disabled']
+  @Prop() disabled: WcButtonProps['disabled']
 
   /**
    * show loading icon
    */
-  @Prop() loading: Props['loading']
+  @Prop() loading: WcButtonProps['loading']
 
   /**
    * theme of button
    */
-  @Prop() theme: Props['theme']
+  @Prop() theme: WcButtonProps['theme']
 
   /**
    * size of button
    */
-  @Prop() size: Props['size']
+  @Prop() size: WcButtonProps['size']
 
   /**
    * fit button width to its parent width
    */
-  @Prop() block: Props['block']
+  @Prop() block: WcButtonProps['block']
 
   @State() inProgress: boolean
 
